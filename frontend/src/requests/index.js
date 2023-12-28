@@ -3,7 +3,7 @@ import { ShowAlert } from '../utils/alerts_utils';
 
 import { TOKEN_TYPE, TOKEN_NAME } from "../constants"
 
-export const BASE_URL = 'http://127.0.0.1:8001/api';
+export const BASE_URL = 'http://95.163.231.52:8001/api';
 export const BASE_URL_ADMIN = BASE_URL + '/admin/'
 
 export const POST = 'POST';
