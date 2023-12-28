@@ -43,11 +43,6 @@ class AdminModelMixin:
         cls.model = cls
         sub_admin_classes.add_class(cls)
 
-        try:
-            implemented_fields = set(kwargs.get("admin_fields", set()))
-        except Exception:
-            raise Exception("Параметр admin_fields должен быть множеством.")
-
         for field in dir(cls):
             _field = getattr(cls, field, None)
             if isinstance(_field, Column):
@@ -56,11 +51,6 @@ class AdminModelMixin:
                     required=not _field.nullable,
                     declarative=True if field in Base.__annotations__ else False
                 )
-
-        if not_implemented_fields := implemented_fields - set(cls.fields):
-            raise ValueError(f"Таких полей нет в модели: {not_implemented_fields}.")
-        elif implemented_fields:
-            cls.fields = [field for field in cls.fields if field in implemented_fields]
 
 
 async def get_all_list_models_data(
@@ -128,7 +118,7 @@ async def edit_admin_model(
 
 async def delete_admin_model(
         model_name: str, model_id: int, db: AsyncSession = Depends(get_db)
-):
+) -> None:
     model = sub_admin_classes.get_class(model_name)
 
     query = delete(model).filter(model.id == model_id)
