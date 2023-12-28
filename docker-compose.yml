@@ -9,13 +9,13 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin
     depends_on:
-      - fastapi_app
+      - fastapi_test_app
     expose:
       - "5432"
     networks:
       - backend
 
-  fastapi_app:
+  fastapi_test_app:
     build:
       context: ./backend/
       dockerfile: ./Dockerfile
